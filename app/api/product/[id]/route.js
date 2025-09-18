@@ -12,3 +12,10 @@ export async function DELETE(request, { params }) {
   const id = params.id;
   return Response.json(await Product.findByIdAndDelete(id));
 }
+
+export async function PATCH(request, { params }) {
+  const id = params.id;
+  const data = await request.json();
+  const updatedProduct = await Product.findByIdAndUpdate(id, data, { new: true });
+  return Response.json(updatedProduct);
+}
