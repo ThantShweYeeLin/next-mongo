@@ -9,6 +9,6 @@ const categorySchema = new mongoose.Schema({
   order: Number
 });
 
-const Category = mongoose.models.category || mongoose.model("category", categorySchema);
+const Category = mongoose.models.Category || mongoose.model("Category", categorySchema);
 
 export default Category;

@@ -74,7 +74,13 @@ export default function Home() {
     { field: 'name', headerName: 'Name', width: 150 },
     { field: 'description', headerName: 'Description', width: 200 },
     { field: 'price', headerName: 'Price', width: 100 },
-    { field: 'category', headerName: 'Category', width: 150, valueGetter: (params) => params.row.category?.name },
+    { field: 'category', headerName: 'Category', width: 150, valueGetter: (params) => {
+      const cat = params.row?.category;
+      if (!cat) return '';
+      if (typeof cat === 'object' && cat.name) return cat.name;
+      if (typeof cat === 'string') return cat;
+      return '';
+    } },
     { field: 'stock', headerName: 'Stock', width: 100 },
     // Add more columns as needed
   ];

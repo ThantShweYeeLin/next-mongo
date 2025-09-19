@@ -1,7 +1,8 @@
 import Product from "@/models/Product";
 
 export async function GET() {
-  return Response.json(await Product.find());
+  const products = await Product.find().populate("category");
+  return Response.json(products);
 }
 
 export async function POST(request) {

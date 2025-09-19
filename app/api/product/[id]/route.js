@@ -19,3 +19,9 @@ export async function PATCH(request, { params }) {
   const updatedProduct = await Product.findByIdAndUpdate(id, data, { new: true });
   return Response.json(updatedProduct);
 }
+
+export async function GET() {
+  const products = await Product.find().populate("category");
+  return Response.json(products);
+}
+
