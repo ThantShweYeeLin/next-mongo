@@ -20,8 +20,4 @@ export async function PATCH(request, { params }) {
   return Response.json(updatedProduct);
 }
 
-export async function GET() {
-  const products = await Product.find().populate("category");
-  return Response.json(products);
-}
 
