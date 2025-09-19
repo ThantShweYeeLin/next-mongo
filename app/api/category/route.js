@@ -26,6 +26,7 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
+  console.log('MONGODB_URI:', process.env.MONGODB_URI);
   const body = await request.json()
   const category = new Category(body)
   await category.save()
