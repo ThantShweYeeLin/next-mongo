@@ -1,7 +1,10 @@
 import Category from "@/models/Category";
+import dbConnect from "@/lib/db";
 
 export async function GET(request) {
-  // console.log('GET /api/category',request.nextUrl.searchParams.get("pno"))
+  await dbConnect();
+  console.log('GET /api/category', request.nextUrl.searchParams.get("pno"));
+  
   const pno = request.nextUrl.searchParams.get("pno")
   if (pno) {
     const size = 3 // TODO fix this hard code
@@ -10,6 +13,7 @@ export async function GET(request) {
       .sort({ order: -1 })
       .skip(startIndex)
       .limit(size)
+    console.log("Categories with pagination:", categories);
     return Response.json(categories)
   }
 
@@ -18,18 +22,23 @@ export async function GET(request) {
     const categories = await Category
       .find({ name: { $regex: s, $options: 'i' } })
       .sort({ order: -1 })
+    console.log("Categories with search:", categories);
     return Response.json(categories)
   }
 
   const categories = await Category.find().sort({ order: -1 })
+  console.log("All categories:", categories);
   return Response.json(categories)
 }
 
 export async function POST(request) {
+  await dbConnect();
   console.log('MONGODB_URI:', process.env.MONGODB_URI);
   const body = await request.json()
+  console.log('Creating category with:', body);
   const category = new Category(body)
   await category.save()
+  console.log('Created category:', category);
   return Response.json(category)
 }
 
